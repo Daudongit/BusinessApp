@@ -13,4 +13,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/login', 'LoginController@index');
+Route::post('/login', 'LoginController@index')->name('login');
 
+Route::get('/signup', 'SignupController@index');
+Route::post('/signup', 'SignupController@index')->name('signup');

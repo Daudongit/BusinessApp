@@ -14,7 +14,8 @@
                             Login
                         </h3>
 
-                        <form action="#">
+                        <form action="{{ route('login') }}">
+                          @csrf
                             <div class="form-group">
                                 <input type="email" class="form-control" placeholder="Email or username">
                             </div>

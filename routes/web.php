@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,6 +12,12 @@
 |
 */
 
-Route::get('{path}', function () {
-    return view('index');
-})->where('path', '(.*)');
+Route::get('/login', 'LoginController@index');
+Route::post('/login', 'LoginController@index')->name('login');
+
+Route::get('/signup', 'SignupController@index');
+Route::post('/signup', 'SignupController@index')->name('signup');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

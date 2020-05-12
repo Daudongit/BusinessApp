@@ -1,0 +1,525 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "Business APP Api Documentation",
+      "description": "Business App  api documentation",
+      "termsOfService": "http://business.com",
+      "contact": {
+        "email": "mailetanetwork@gmail.com"
+      },
+      "license": {
+        "name": "Apache 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      },
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "http://businessapp.com/api/"
+      },
+      {
+        "url": "http://localhost:8000/api/"
+      }
+    ],
+    "tags": [
+      {
+        "name": "auth",
+        "description": "Authentication"
+      },
+      {
+        "name": "user",
+        "description": "User"
+      },
+      {
+        "name": "country",
+        "description": "Country"
+      }
+    ],
+    "paths": {
+        "/register": {
+          "post": {
+            "tags": [
+              "auth"
+            ],
+            "summary": "Create a user",
+            "description": "This is an endpoint to create a user",
+            "requestBody": {
+              "description": "user registration",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/RegistrationDetail"
+                  }
+                }
+              },
+              "required": true
+            },
+            "responses": {
+                "200":{
+                    "description":"user created",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "status":{
+                                        "type":"string",
+                                        "example":"true"
+                                    },
+                                    "message":{
+                                        "type":"string",
+                                        "example":"ok"
+                                    },
+                                    "data":{
+                                        "$ref":"#/components/schemas/FinderDataResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+          }
+        },
+        "/auth/login": {
+          "post": {
+            "tags": [
+              "auth"
+            ],
+            "summary": "Login a finder",
+            "description": "This is an endpoint for finder login",
+            "requestBody": {
+              "description": "finder login information object",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/FinderLogin"
+                  }
+                }
+              },
+              "required": true
+            },
+            "responses": {
+                "200":{
+                    "description":"finder login",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "status":{
+                                        "type":"string",
+                                        "example":"true"
+                                    },
+                                    "message":{
+                                        "type":"string",
+                                        "example":"ok"
+                                    },
+                                    "data":{
+                                        "$ref":"#/components/schemas/FinderDataResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Invalid username/password supplied",
+                    "content": {}
+                }
+            }
+          }
+        },
+        "/auth/logout": {
+          "post": {
+            "tags": [
+              "auth"
+            ],
+            "summary": "Logout a finder",
+            "description": "This is an endpoint for finder logout",
+            "responses": {
+              "200": {
+                "description": "successfully logout",
+                "content": {
+                    "application/json":{
+                        "schema":{
+                            "$ref":"#/components/schemas/Status"
+                        }
+                    }
+                }
+              }
+            }
+          }
+        },
+        "/auth/user": {
+          "get": {
+            "tags": [
+              "auth"
+            ],
+            "summary": "Get a login user detail",
+            "description": "Returns a single user",
+            "responses": {
+              "200": {
+                "description": "successful operation",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref":"#/components/schemas/FinderDataResponse"
+                    }
+                  }
+                }
+              },
+              "404": {
+                "description": "Finder not found",
+                "content": {}
+              }
+            },
+            "security":[
+              {
+                "bearerAuth":[]
+              }
+            ]
+          }
+        },
+        "/auth/change-password":{
+          "put": {
+            "tags": [
+              "auth"
+            ],
+            "summary": "Change finder password",
+            "description": "This can only be done by an authorised finder.",
+            "requestBody": {
+              "description": "Updated finder password object",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/FinderPassword"
+                  }
+                }
+              },
+              "required": true
+            },
+            "responses": {
+                "200": {
+                    "description": "successfully changed",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Status"
+                            }
+                        }
+                    }
+                  },
+                "400": {
+                    "description": "Invalid user supplied",
+                    "content": {}
+                }
+            },
+            "security":[
+              {
+                "bearerAuth":[]
+              }
+            ]
+          }
+        },
+        "/country": {
+          "get": {
+            "tags": [
+              "country"
+            ],
+            "summary": "Get all countries ",
+            "description": "Returns all countries",
+            "responses": {
+                "200":{
+                    "description":"all country",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                              "properties":{
+                                "success":{
+                                    "type":"boolean",
+                                    "example":"true"
+                                },
+                                "message":{
+                                    "type":"string",
+                                    "example":"ok"
+                                },
+                                "data":{
+                                  "type":"array",
+                                    "items":{
+                                      "$ref":"#/components/schemas/CountryDataResponse"
+                                    }
+                                }
+                              }
+                            }
+                        }
+                    }
+                },
+                "404": {
+                    "description": "countries not found",
+                    "content": {}
+                }
+            }
+          }
+        },
+        "/language": {
+          "get": {
+            "tags": [
+              "language"
+            ],
+            "summary": "Get all languages ",
+            "description": "Returns all languages",
+            "responses": {
+                "200":{
+                    "description":"all languages",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                              "properties":{
+                                "success":{
+                                    "type":"boolean",
+                                    "example":"true"
+                                },
+                                "message":{
+                                    "type":"string",
+                                    "example":"ok"
+                                },
+                                "data":{
+                                  "type":"array",
+                                    "items":{
+                                      "$ref":"#/components/schemas/LanguageDataResponse"
+                                    }
+                                }
+                              }
+                            }
+                        }
+                    }
+                },
+                "404": {
+                    "description": "language not found",
+                    "content": {}
+                }
+            }
+          }
+        },
+        "/religion": {
+          "get": {
+            "tags": [
+              "religion"
+            ],
+            "summary": "Get all religions ",
+            "description": "Returns all religions",
+            "responses": {
+                "200":{
+                    "description":"all religions",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                              "properties":{
+                                "success":{
+                                    "type":"boolean",
+                                    "example":"true"
+                                },
+                                "message":{
+                                    "type":"string",
+                                    "example":"ok"
+                                },
+                                "data":{
+                                  "type":"array",
+                                    "items":{
+                                      "$ref":"#/components/schemas/ReligionDataResponse"
+                                    }
+                                }
+                              }
+                            }
+                        }
+                    }
+                },
+                "404": {
+                    "description": "religion not found",
+                    "content": {}
+                }
+            }
+          }
+        }
+    },
+    "components": {
+        "schemas": {
+          "CountryDataResponse": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "full_name": {
+                "type": "string"
+              },
+              "capital": {
+                "type": "string"
+              }
+            }
+          },
+          "ReligionDataResponse": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string"
+              },
+              "updated_at": {
+                "type": "string"
+              }
+            }
+          },
+          "LanguageDataResponse": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "code": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string"
+              },
+              "updated_at": {
+                "type": "string"
+              }
+            }
+          },
+          "Finder": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "gender": {
+                "type": "string"
+              },
+              "first_name": {
+                "type": "string"
+              },
+              "last_name": {
+                "type": "string"
+              },
+              "nationality": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              },
+              "age": {
+                "type": "integer"
+              },
+              "height": {
+                "type": "integer"
+              },
+              "vital_statistics": {
+                "type": "string"
+              },
+              "complexion": {
+                "type": "string"
+              },
+              "physically_challenged": {
+                "type": "string"
+              },
+              "facial_mark": {
+                "type": "string"
+              },
+              "blood_group": {
+                "type": "string"
+              },
+              "genotype": {
+                "type": "string"
+              },
+              "religion": {
+                "type": "string"
+              },
+              "highest_level_of_education": {
+                "type": "string"
+              }
+            }
+          },
+          "FinderLogin": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              }
+            }
+          },
+          "FinderDataResponse": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string"
+              }
+            }
+          },
+          "FinderPassword": {
+            "type": "object",
+            "properties": {
+              "old_password": {
+                "type": "string"
+              },
+              "new_password": {
+                "type": "string"
+              },
+              "confirm_password": {
+                "type": "string"
+              }
+            }
+          },
+          "Status":{
+            "type":"object",
+            "properties":{
+                "status":{
+                    "type":"string",
+                    "example":"success"
+                },
+                "message":{
+                    "type":"string",
+                    "example":"ok"
+                }
+            }
+          },
+          "404":{
+            "type":"object",
+            "properties":{
+                "error":{
+                    "type":"string",
+                    "example":"Resource not found"
+                },
+                "message":{
+                    "type":"string",
+                    "example":"Not found"
+                }
+            }
+          }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+              "type": "http",
+              "scheme":"bearer",
+              "bearerFormat":"JWT" 
+            }
+        }
+    }
+}

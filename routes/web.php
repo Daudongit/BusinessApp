@@ -1,6 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', 'TemplateController@index');
 Route::get('/login', 'LoginController@index');
 Route::post('/login', 'LoginController@index')->name('login');
 

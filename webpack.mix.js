@@ -5,6 +5,13 @@ require('laravel-mix-versionhash')
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 mix
+  .styles([
+      'public/assets/css/custom-bs4-3.css',
+      'public/assets/css/swiper.min.css',
+      'public/assets/css/ui.css',
+      'public/assets/css/style.css',
+      'public/assets/css/responsive.css'
+    ],'public/css/all.css')
   .js('resources/js/app.js', 'public/dist/js')
   .sass('resources/sass/app.scss', 'public/dist/css')
   .browserSync(process.env.MIX_APP_URL)

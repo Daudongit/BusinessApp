@@ -31,7 +31,8 @@ export default {
   },
 
   data: () => ({
-    layout: null,
+    // layout: null,
+    layout: 'default',
     defaultLayout: 'default'
   }),
 
